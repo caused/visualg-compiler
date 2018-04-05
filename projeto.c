@@ -78,7 +78,7 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "+";
+			return "opsoma";
 		} else{
 			return "erro";
 		}
@@ -88,7 +88,7 @@ char *leitorLexico(char str[],int *p) {
 			goto Q3;
 		 } else if(str[i] == '\0'){
 		 	*p = i;
-		 	return ">";
+		 	return "opmai";
 		 }else {
 	        return "erro";
 	     }  
@@ -96,7 +96,7 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return "=";
+			return "opmaiigual";
 	    } else {    
 		    return "erro";
         } 
@@ -104,13 +104,13 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 	    if(str[i] == '\0'){
 		 	*p = i;
-		 	return "<";
+		 	return "opmen";
 		 }else if(str[i] == '-'){
 			goto Q120;
 		} else if(str[i] == '>'){
 			goto Q114;
 		} else if(str[i] == '='){
-			goto Q3;
+			goto Q117;
 		} else {
 			return "erro";
 		}
@@ -905,15 +905,16 @@ char *leitorLexico(char str[],int *p) {
 		} else{
 			goto Q118;
 		}	
-
+		
 	Q111:
 		i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return "=";
+			return "opigual";
 	    } else {    
 		    return "erro";
-        } 
+        } 	
+
 	Q112:
 		i++;
 		if(str[i] == 'u'){
@@ -933,7 +934,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "<>";
+			return "opdifer";
 		} else{
 			return "erro";
 		}
@@ -952,6 +953,14 @@ char *leitorLexico(char str[],int *p) {
 		} else{
 			goto Q118;
 		}
+	Q117:	
+	    i++;
+	    if(str[i] == '\0'){
+			*p = i;
+			return "opmenigual";
+	    } else {    
+		    return "erro";
+        } 
 	Q118:
 		i++;
 		if(str[i] == '\0' || str[i] == '\"'){
@@ -968,7 +977,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return ",";
+			return "opvirg";
 		} else{
 			return "erro";
 		}
@@ -976,7 +985,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "<-";
+			return "opatrib";
 		} else{
 			return "erro";
 		}
@@ -993,7 +1002,7 @@ char *leitorLexico(char str[],int *p) {
 		if(isdigit(str[i]) || isalpha(str[i])){
 			goto Q123;
 		} else{
-			if(str[i] == '\"'){
+			if(str[i] == 'oprelasp'){
 				goto Q118;
 			} else {
 				return "erro";
@@ -1003,7 +1012,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return ":";
+			return "opreldoispont";
 		} else{
 			return "erro";
 		}
@@ -1011,7 +1020,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "*";
+			return "opmult";
 		} else{
 			return "erro";
 		}
@@ -1019,7 +1028,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "\\";
+			return "opdiv";
 		} else{
 			return "erro";
 		}
@@ -1028,7 +1037,7 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return str;
+			return "numero";
 		}else if(isdigit(str[i])){
 			goto Q137;
 		} else{
@@ -1039,7 +1048,7 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "(";
+			return "oppa";
 		} else{
 			return "erro";
 		}
@@ -1047,7 +1056,7 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return ")";
+			return "oppf";
 		} else{
 			return "erro";
 		}
@@ -1056,7 +1065,7 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return ";";
+			return "oppontvirg";
 		} else{
 			return "erro";
 		}	
@@ -1197,8 +1206,9 @@ int main(){
 	    		 lexema = strtok( linha, " \n\t" );
 			    while( lexema != NULL ){
 				    strcpy(nomeToken, leitorLexico(lexema, &i));
-				    if(nomeToken != "erro"){
+				    if(strcmp (nomeToken, "erro") != 0){
 			    	    enqueue(BUFFER,nomeToken,lexema);
+			    	    printf("%s\n", nomeToken);
 			    	    if(strcmp (nomeToken, lexema) == 0){
 			    	    	fprintf(saida, "<%s>\n", nomeToken);
 						}else{
