@@ -1,573 +1,461 @@
-/*INCLUINDO DEBUG PARA O CÓDIGO*/
-//#define DEBUG
-#ifdef DEBUG
-#endif
-/*palavras reservadas*/ 
-#define senao			"senao"           
-#define se      		"se"
-#define enquanto		"enquanto"
-#define entao      		"entao"
-#define exp      		"exp"
-#define escreva    		"escreva"
-#define leia    		"leia"
-#define logico     		"logico"
-#define para       		"para"
-#define ate        		"ate"
-#define de 				"de"		
-#define algoritmo   	"algoritmo"
-#define mod     		"mod"
-#define inicio      	"inicio"
-#define inteiro     	"inteiro"
-#define fimpara    		"fimpara"
-#define fimse     		"fimse"
-#define fimalgoritmo 	"fimalgoritmo"
-#define fimenquanto  	"fimenquanto"
-#define faca		 	"faca"
-#define falso   	 	"falso"
-#define verdadeiro		"verdadeiro"
-#define var    			"var"
-#define id 				"id"
-#define algid			"algid"
-/*operadores*/
-#define relope          "e"
-#define relopou			"ou"
-#define opadi           "+"
-#define opmult          "*"
-#define opsub          	"-"
-#define relopatt        "<-"
-#define relopmei        "<="
-#define relopdif        "<>"
-#define relopme     	"<"
-#define relopma     	">"
-#define opdiv     		"\\"
-#define relopmai      	">="
-#define relopi          "="
-#define pontvir			","
-#define pontdoispontos	":"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
 
-/*
-Método leitor - Responsável pela identificação de lexemas conhecidos pela linguagem mini-visualg
-*/
+int startsWith(const char *a, const char *b)
+{
+   if(strncmp(a, b, strlen(b)) == 0) return 1;
+   return 0;
+}
+
+
 char *leitor(char str[],int *p) {
   int i = *p;
 
 	goto Q0;
 
 	Q0:
-	    i++;
-	    if(str[i] == ' ')
-		    return "&*";
-		if(str[i] == '\n')
-		    return "&*";       	
-	    if ((str[i] == '0')||(str[i] == '1')||(str[i] == '2')||(str[i] == '3')||(str[i] == '4')||(str[i] == '5')||(str[i] == '6')||(str[i] == '7')||(str[i] == '8')||(str[i] == '9')){
-	        goto Q118;
-	    } else {
-	        if(str[i] == 's'){
-		       	goto Q27;
-	        } else {
-	           if (str[i] == 'e'){
-	   		         goto Q20;
-	           } else {
-	                if (str[i] == 'l'){
-	                   goto Q16;
-	                } else {
-	                    if (str[i] == 'p'){
-	                         goto Q44;
-                        } else {
-	                       if (str[i] == 'a'){
-	                            goto Q89;
-	                        } else {
-	                            if (str[i] == 'm'){
-	                                goto Q72;
-	                            } else {
-	                                 if (str[i] == 'i'){
-	                                    goto Q55;
-	                                } else {
-	                                    if (str[i] == 'd'){
-	                                        goto Q53;
-	                                    } else {
-	                                        if (str[i] == 'f'){
-	                                       		 goto Q11;
-	                                       } else {
-	                               		         if (str[i] == 'o'){
-	                                               goto Q68;
-	                                            } else {
-	                                                if (str[i] == 'v'){
-	                                                    goto Q1;
-	                                                } else {
-	                                                    if (str[i] == '='){
-	                                                        goto Q62;
-	                                                    } else {
-	                                                        if (str[i] == '\\'){
-	                                                               goto Q102;
-	                                                         } else {
-	                                                         	if (str[i] == '>'){
-	                                                                goto Q50;
-	                                                            } else {
-																	if (str[i] == '<'){
-																	    goto Q103;
-																	} else {
-																		        if (str[i] == '/'){
-																		            goto Q113;
-																		        } else {
-																		            if (str[i] == '*'){
-																		                goto Q104;
-																		            } else {
-																		                if (str[i] == '-'){
-																		                    goto Q105;
-																		                } else {
-																		                    if (str[i] == '+'){
-																		                        goto Q106;
-																		                    } else {
-																		                        if (str[i] == '"'){
-																		                            goto Q114;    
-																		                        } else {
-																		                        	if(isdigit(str[i])){
-																		                        		goto Q118;
-																									} else {
-																										if(str[i] == ':'){
-																											goto Q119;
-																										} else {
-																											if(str[i] == ','){
-																												goto Q129;
-																											} else {
-																												if(isalpha(str[i])){
-																													goto Q110;
-																												} else {
-																													return "&*";
-																												}
-																											}
-																										}
-																									}
-																						 	    }
-																							 }
-																						 }
-																					}
-																				}
-																			}
-																	    }
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+	    i++;       	
+	    if (isdigit(str[i])){
+	        goto Q137;
+	    } else if(str[i] == 's'){
+		    goto Q52;
+	    } else if (str[i] == 'e'){
+	   	    goto Q8;
+	    } else if (str[i] == 'l'){
+	        goto Q18;
+	    } else if (str[i] == 'p'){
+	        goto Q61;
+        } else if (str[i] == 'a'){
+	        goto Q67;
+	    } else if (str[i] == 'm'){
+	        goto Q5;
+	    } else if (str[i] == 'i'){
+	        goto Q11;
+	    } else if (str[i] == 'd'){
+	        goto Q65;
+	    } else if (str[i] == 'f'){
+	        goto Q24;
+	    } else if (str[i] == 'o'){
+	        goto Q112;
+	    } else if (str[i] == 'v'){
+	        goto Q29;
+	    } else if (str[i] == '='){
+	        goto Q11;
+	    } else if (str[i] == '\\'){
+	        goto Q126;
+	    } else if (str[i] == '>'){
+	        goto Q2;
+	    } else if (str[i] == '<'){
+			goto Q4;
+		} else if (str[i] == '*'){
+			goto Q125;
+		} else if (str[i] == '-'){
+			goto Q121;
+		} else if (str[i] == '+'){
+			goto Q1;
+		} else  if (str[i] == '"'){
+			goto Q123;    
+		} else if(str[i] == ':'){
+			goto Q124;
+		} else if(str[i] == ','){
+			goto Q119;
+		} else if(isalpha(str[i])){
+			goto Q118;
+		} else {
+			return "erro";
+		}
+																										
 	Q1:
 	    i++;
-	    if(str[i] == 'e'){
-			goto Q2;
-	    } else {
-	        if(str[i] == 'a'){
-		       goto Q111;
-		    } else {    
-		           goto Q110;
-		        }
-    	   }
+		if(str[i] == '\0'){
+			*p = i;
+			return "+";
+		} else{
+			return "erro";
+		}
 	Q2:
 	    i++;
-	    if(str[i] == 'r'){
+	    if(str[i] == '='){
 			goto Q3;
-		 } else {
-	        	goto Q110;
-	        }  
+		 } else if(str[i] == '\0'){
+		 	*p = i;
+		 	return ">";
+		 }else {
+	        return "erro";
+	     }  
 	Q3:
 	    i++;
-	    if(str[i] == 'd'){
-			goto Q4;
-	    } else {
-	        	goto Q110;
-	        }   
+	    if(str[i] == '\0'){
+			*p = i;
+			return "=";
+	    } else {    
+		    return "erro";
+        } 
 	Q4:
 		i++;
-	    if (str[i] == 'a') {
-	        goto Q5;
-	    } else {    
-		    goto Q110;
-        }   
+	    if(str[i] == '\0'){
+		 	*p = i;
+		 	return "<";
+		 }else if(str[i] == '-'){
+			goto Q120;
+		} else if(str[i] == '>'){
+			goto Q114;
+		} else if(str[i] == '='){
+			goto Q3;
+		} else {
+			return "erro";
+		}
+				
+			
 	Q5:
 	    i++;
-	    if(str[i] == 'd'){
-		   goto Q6;
-	    } else {    
-		    goto Q110;
-        } 
+	    if(str[i] == 'o'){
+			goto Q6;
+	    } else {
+	        goto Q118;
+        }
 	Q6:
 	    i++;
-	    if(str[i] == 'e'){
-          goto Q7;
-        } else {    
-		    goto Q110;
-        } 
+	    if(str[i] == 'd'){
+			goto Q7;
+	    } else {
+	        goto Q118;
+        }
 	Q7:
 	    i++;
-	    if(str[i] == 'i'){
-			goto Q8;
+	    if(str[i] == '\0'){
+	    	*p = i;
+			return "mod";
 	    } else {
-	        goto Q110; 
+	        goto Q118;
         }
 	Q8:
-	    i++;
-	    if(str[i] == 'r'){
-			goto Q9;
-	    } else {    
-		    goto Q110;
-        } 
+	     i++;
+	    if(str[i] == 'n'){
+			goto Q48;
+	    } else if(str[i] == 'x') {
+	        goto Q9;
+        }else if(str[i] == 's') {
+	        goto Q39;
+        }else{
+        	goto Q118;
+		}
 	Q9:
 	    i++;
-	    if(str[i] == 'o'){
+	    if(str[i] == 'p'){
 			goto Q10;
-	    } else {    
-	        goto Q110;
+	    } else {
+	        goto Q118;
         }
     Q10:
     	i++;
     	if(str[i] == '\0'){
     		*p = i;
-    		return verdadeiro;
+    		return "exp";
 		} else {
-			goto Q110;
+			goto Q118;
 		}
 	Q11:
 		i++;
-	    if (str[i] == 'a') {
+	    if (str[i] == 'n') {
           goto Q12;
 	    } else {    
-		    if(str[i] == 'i'){
-		    	goto Q36;
-			} else{
-				goto Q110;
-			}
+		  goto Q118;
         } 
 	Q12:
 	    i++;
-	    if(str[i] == 'c'){
-			goto Q48;
-	    } else {    
-		    if(str[i] == 'l'){
-		    	goto Q13;
-			} else{
-				goto Q110;
-			}
-        } 
+	    if(str[i] == 't'){
+			goto Q13;
+	    } else if(str[i] == 'i'){    		
+		    goto Q107;
+		} else{
+			goto Q118;
+		} 
 	Q13:
 	    i++;
-	    if(str[i] == 's'){
+	    if(str[i] == 'e'){
 			goto Q14;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q14:
 		i++;
-	    if (str[i] == 'o') {
+	    if (str[i] == 'i') {
 	        goto Q15;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         }
 	Q15:
 	    i++;
-	    if(str[i] == '\0'){
-	    	*p = i;
-			return falso;
+	    if (str[i] == 'r') {
+	        goto Q16;
 	    } else {    
-		    goto Q110;
-        } 
+		    goto Q118;
+        }
 	Q16:
-	    i++;
-	    if(str[i] == 'e'){
-			goto Q17;
+	   i++;
+	    if (str[i] == 'o') {
+	        goto Q17;
 	    } else {    
-		    if(str[i] == 'o'){
-		    	goto Q63;
-			} else {
-				goto Q110;
-			}
-        } 
+		    goto Q118;
+        }
 	Q17:
-	    i++;
-	    if(str[i] == 'i'){
-			goto Q18;
-	    } else {
-	        goto Q110;
-    	}
-	Q18:
-	    i++;
-	    if(str[i] == 'a'){
-			goto Q19;
-	    } else {    
-		    goto Q110;
-        } 
-	Q19:
-	    i++;
-	    if(str[i] == '\0'){
-	    	*p = i;
-			return leia;
-	    } else {    
-		    goto Q110;
-        } 
-	Q20:
-	    i++;
-	    if(str[i] == 'n'){
-			goto Q29;
-	    } else {    
-		    if(str[i] == 's'){
-		    	goto Q20;
-			} else {
-				if(str[i] == 'x')
-				{
-					goto Q70;
-				}
-			}
-        } 
-	Q21:
-		i++;
-	    if (str[i] == 'c') {
-          goto Q22;
-	    } else {    
-		    goto Q110;
-        } 
-	Q22:
-	    i++;
-	    if(str[i] == 'r'){
-			goto Q23;
-	    } else {    
-		    goto Q110;
-        } 
-	Q23:
-	    i++;
-	    if(str[i] == 'e'){
-			goto Q24;
-	    } else {    
-		    goto Q110;
-        } 
-	Q24:
-	    i++;
-	    if(str[i] == 'v'){
-			goto Q25;
-	    } else {    
-		    goto Q110;
-        } 
-	Q25:
-	    i++;
-	    if(str[i] == 'a'){
-			goto Q26;
-	    } else {    
-		    goto Q110;
-        } 
-	Q26:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return escreva;
+			return "inteiro";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
+	Q18:
+	    i++;
+	    if(str[i] == 'o'){
+			goto Q19;
+	    } else if(str[i] == 'e'){    
+		    goto Q40;
+        } else{
+        	goto Q118;
+		}
+	Q19:
+	    i++;
+	    if (str[i] == 'g') {
+	        goto Q20;
+	    } else {    
+		    goto Q118;
+        }
+	Q20:
+	    i++;
+	    if (str[i] == 'i') {
+	        goto Q21;
+	    } else {    
+		    goto Q118;
+        }
+	Q21:
+		 i++;
+	    if (str[i] == 'c') {
+	        goto Q22;
+	    } else {    
+		    goto Q118;
+        }
+	Q22:
+	    i++;
+	    if (str[i] == 'o') {
+	        goto Q23;
+	    } else {    
+		    goto Q118;
+        }
+	Q23:
+	    i++;
+	    if(str[i] == '\0'){
+			*p = i;
+		    return "logico";
+	    } else {    
+		    goto Q118;
+        } 
+	Q24:
+	    i++;
+	    if(str[i] == 'a'){
+			goto Q25;
+	    } else if(str[i] == 'i') {    
+		    goto Q57;
+        } else{
+        	goto Q118;
+		}
+	Q25:
+	    i++;
+	    if(str[i] == 'l'){
+			goto Q26;
+	    } else if(str[i] = 'c'){
+		    goto Q70;
+        } else{
+        	goto Q118;
+		}
+	Q26:
+	    i++;
+	    if (str[i] == 's') {
+	        goto Q27;
+	    } else {    
+		    goto Q118;
+        }
 	Q27:
 	    i++;
-	    if (str[i] == 'e') {
+	    if (str[i] == 'o') {
 			goto Q28;
 	    } else {    
-			goto Q110;
+			goto Q118;
         }
 	Q28:
 	    i++;
 	    if(str[i] == '\0'){
-				*p = i;
-				return se;
-	        } else {
-	           if(str[i] == 'n'){
-		          goto Q33;
-	            } else {    
-		            goto Q110;
-                } 
-           }
+			*p = i;
+			return "falso";
+	    } else {
+	    	goto Q118;
+	    }
 	Q29:
 	    i++;
-	    if (str[i] == 'q') {
-		    goto Q75;
-	    } else {    
-		    if(str[i] == 't'){
+	    if(str[i] == 'e'){
 		    	goto Q30;
-			}else{
-				goto Q110;
-			}
-        } 
+		}else if(str[i] = 'a'){
+			goto Q115;
+		}else{
+			goto Q118;
+		}
+     
 	Q30:
 	    i++;
-	    if(str[i] == 'a'){
+	    if(str[i] == 'r'){
 			goto Q31;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q31:
 	    i++;
-	    if(str[i] == 'o'){
+	    if(str[i] == 'd'){
 			goto Q32;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q32:
 	    i++;
-	    if(str[i] == '\0'){
-			*p = i;
-			return entao;
+	    if(str[i] == 'a'){
+			goto Q33;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q33:
 	    i++;
-	    if(str[i] == 'a'){
+	    if(str[i] == 'd'){
 			goto Q34;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
     Q34:
 	    i++;
-	    if(str[i] == 'o'){
+	    if(str[i] == 'e'){
 			goto Q35;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q35:
 		i++;
-	    if (str[i] == '\0') {
-          *p = i;
-	        return senao;
+	    if(str[i] == 'i'){
+			goto Q36;
 	    } else {    
-		    goto Q110;
-        }
+		    goto Q118;
+        } 
     Q36:
 	    i++;
-	    if(str[i] == 'm'){
+	    if(str[i] == 'r'){
 			goto Q37;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q37:
 	    i++;
-	    if(str[i] == 's'){
+	    if(str[i] == 'o'){
 			goto Q38;
 	    } else {    
-		    if(str[i] == 'e'){
-		    	goto Q81;
-			} else {
-				if(str[i] == 'a'){
-					goto Q120;
-				} else {
-					if(str[i] == 'p'){
-						goto Q40;
-					}else{
-						goto Q110;
-					}
-				}
-			}
+		    goto Q118;
         } 
+         
 	Q38:
 		i++;
-	    if (str[i] == 'e') {
-          goto Q39;
-	    } else {    
-		    goto Q110;
-        } 
+    	if(str[i] == '\0'){
+    		*p = i;
+    		return verdadeiro;
+		} else {
+			goto Q118;
+		}
 	Q39:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return fimse;
+			return "fimse";
 	    } else {    
-		   goto Q110;
+		   goto Q118;
         } 
 	Q40:
 	    i++;
 	    if(str[i] == 'a'){
 			goto Q41;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q41:
 		i++;
 	    if (str[i] == 'r') {
            goto Q42;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         }
 	Q42:
 	    i++;
 	    if(str[i] == 'a'){
 			goto Q43;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q43:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return fimpara;
+			return "fimpara";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q44:
 		i++;
 	    if (str[i] == 'a') {
            goto Q45;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q45:
 	    i++;
 	    if(str[i] == 'r'){
 			goto Q46;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q46:
 	    i++;
 	    if(str[i] == 'a'){
 			goto Q47;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q47:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return para;
+			return "para";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q48:
 	    i++;
 	    if(str[i] == 'a'){
 			goto Q49;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q49:
 		i++;
 	    if (str[i] == '\0') {
            *p = i;
-	        return faca;
+	        return "faca";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         }
 	Q50:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return relopma;
+			return ">";
 	    } else {
 	         return "&*";
 		}
@@ -576,37 +464,37 @@ char *leitor(char str[],int *p) {
 	    if(str[i] == 'e'){
 			goto Q52;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q52:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return ate;
+			return "ate";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q53:
 	    i++;
 	    if(str[i] == 'e'){
 			goto Q54;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q54:
 		i++;
 	    if (str[i] == '\0') {
            *p = i;
-	        return de;
+	        return "de";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q55:
 	    i++;
 	    if(str[i] == 'n'){
 			goto Q56;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q56:
 	    i++;
@@ -616,7 +504,7 @@ char *leitor(char str[],int *p) {
 		    if(str[i] == 't'){
 		    	goto Q57;
 			} else {
-				goto Q110;
+				goto Q118;
 			}
         } 
 	Q57:
@@ -624,42 +512,42 @@ char *leitor(char str[],int *p) {
 	    if(str[i] == 'e'){
 			goto Q58;
 	    } else {    
-		   	goto Q110;
+		   	goto Q118;
         } 
 	Q58:
 		i++;
 	    if (str[i] == 'i') {
            goto Q59;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         }
 	Q59:
 	    i++;
 	    if(str[i] == 'r'){
 			goto Q60;
 		} else{
-		    goto Q110; 
+		    goto Q118; 
 		}
 	Q60:
 	    i++;
 	    if(str[i] == 'o'){
 			goto Q61;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q61:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return inteiro;
+			return "inteiro";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q62:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return relopi;
+			return "=";
 	    } else {    
 		    return "&*";
         } 
@@ -668,188 +556,188 @@ char *leitor(char str[],int *p) {
 	    if (str[i] == 'g') {
           goto Q64;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q64:
 	    i++;
 	    if(str[i] == 'i'){
 			goto Q65;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q65:
 	    i++;
 	    if(str[i] == 'c'){
 			goto Q66;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q66:
 	    i++;
 	    if(str[i] == 'o'){
 			goto Q67;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q67:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return logico;
+			return "logico";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q68:
 	    i++;
 	    if(str[i] == 'u'){
 			goto Q69;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q69:
 		i++;
 	    if (str[i] == '\0') {
           *p = i;
-	    	return relopou;
+	    	return "ou";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q70:
 		i++;
 	    if(str[i] == 'p'){
 			goto Q71;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q71:
 		i++;
 	    if (str[i] == '\0') {
           *p = i;
-	        return exp;
+	        return "exp";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q72:
 	    i++;
 	    if(str[i] == 'o'){
 			goto Q73;
 	    } else {
-	        goto Q110;
+	        goto Q118;
         }
 	Q73:
 		i++;
 	    if (str[i] == 'd') {
           goto Q74;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q74:
 	    i++;
 	    if(str[i] == '\0'){
 			*p = i;
-			return mod;
+			return "mod";
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q75:
 		i++;
 	    if (str[i] == 'u') {
           goto Q76;
 	    } else {    
-		    goto Q110;
+		    goto Q118;
         } 
 	Q76:
 	    i++;
 	    if(str[i] == 'a'){
 			goto Q77;
 	    } else {
-	        goto Q110;
+	        goto Q118;
     	}
 	Q77:
 	    i++;
 	    if(str[i] == 'n'){
         	goto Q78;
 	    } else {
-	    	goto Q110;
+	    	goto Q118;
 	    }
 	Q78:
 	    i++;
 	    if(str[i] == 't'){
         goto Q79;
 	    } else {
-	    	goto Q110;
+	    	goto Q118;
 	    }
 	Q79:
 	    i++;
 	    if(str[i] == 'o'){
 			goto Q80;
 	    } else {
-	    	goto Q110;
+	    	goto Q118;
 		}
 	Q80:
 	    i++;
 	    if (str[i] == '\0') {
           *p = i;
-	    	return enquanto;
+	    	return "enquanto";
 	    }  else {
-	         goto Q110;
+	         goto Q118;
 		}
 	Q81:
 	    i++;
 	    if(str[i] == 'n'){
 			goto Q82;
 	    } else {
-	        goto Q110;
+	        goto Q118;
 	    }
 	Q82:
 	    i++;
 	    if (str[i] == 'q') {
           goto Q83;
 	    }  else {
-	    	 goto Q110;
+	    	 goto Q118;
 		}
 	Q83:
 	    i++;
 	    if (str[i] == 'u') {
           goto Q84;
 	    }  else {
-	    	 goto Q110;
+	    	 goto Q118;
 		}
 	Q84:
 	    i++;
 	    if (str[i] == 'a') {
           goto Q85;
 	    }  else {
-	    	 goto Q110;
+	    	 goto Q118;
 		}
 	Q85:
 	    i++;
 	    if (str[i] == 'n') {
           goto Q86;
 	    }  else {
-	    	goto Q110;
+	    	goto Q118;
 		}
 	Q86:
 	    i++;
 	    if (str[i] == 't') {
           goto Q87;
 	    }  else {
-	    	 goto Q110;
+	    	 goto Q118;
 		}
 	Q87:
 	    i++;
 	    if (str[i] == 'o') {
           goto Q88;
 	      }else {
-	    	 goto Q110;
+	    	 goto Q118;
 		}
 	Q88:
 	    i++;
 	    if (str[i] == '\0') {
           *p = i;
-	        return fimenquanto;
+	        return "fimenquanto";
 	      }else {
-	    	 goto Q110;
+	    	 goto Q118;
 		}
 	Q89:
 	    i++;
@@ -859,7 +747,7 @@ char *leitor(char str[],int *p) {
 	    	 if(str[i] == 'l'){
 	    	 	goto Q90;
 			 } else {
-			 	goto Q110;
+			 	goto Q118;
 			 }
 		}
 	Q90:
@@ -867,92 +755,92 @@ char *leitor(char str[],int *p) {
 	    if (str[i] == 'g') {
           goto Q91;
 	    } else {
-	        goto Q110;
+	        goto Q118;
     	}
 	Q91:
 	    i++;
 	    if (str[i] == 'o') {
           	goto Q92;
 	      }else {
-	    	goto Q110;
+	    	goto Q118;
 		} 
 	Q92:
 	    i++;
 	    if (str[i] == 'r') {
            goto Q93;
 	    } else {    
-		   goto Q110;
+		   goto Q118;
         }   
 	Q93:
 		i++;
 		if(str[i] == 'i'){
 			goto Q94;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q94:
 		i++;
 		if(str[i] == 't'){
 			goto Q95;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q95:
 		i++;
 		if(str[i] == 'm'){
 			goto Q96;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q96:
 		i++;
 		if(str[i] == 'o'){
 			goto Q97;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q97:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return algoritmo;
+			return "algoritmo";
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q98:
 		i++;
 		if(str[i] == 'c'){
 			goto Q99;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q99:
 		i++;
 		if(str[i] == 'i'){
 			goto Q100;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q100:
 		i++;
 		if(str[i] == 'o'){
 			goto Q101;
 		} else{
-			goto Q110;	
+			goto Q118;	
 		}
 	Q101:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return inicio;
+			return "inicio";
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q102:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return opdiv;
+			return "\\";
 		} else{
 			return "&*";
 		}
@@ -960,7 +848,7 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return relopme;
+			return "<";
 		} else{
 			if(str[i] == '-'){
 				goto Q116;
@@ -980,7 +868,7 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return opmult;
+			return "*";
 		} else{
 			return "&*";
 		}
@@ -988,23 +876,17 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return opsub;
+			return "-";
 		} else{
 			return "&*";
 		}
 	Q106:
-		i++;
-		if(str[i] == '\0'){
-			*p = i;
-			return opadi;
-		} else{
-			return "&*";
-		}
+	
 	Q107:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return relopdif;
+			return "<>";
 		} else{
 			return "&*";
 		}
@@ -1012,7 +894,7 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return relopmei;
+			return "<=";
 		} else{
 			return "&*";
 		}
@@ -1020,36 +902,25 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return relopmai;
+			return ">=";
 		} else{
 			return "&*";
 		}
-	Q110:
-		i++;
-		if(str[i] == '\0'){
-				*p = i;
-				return id;
-			}else{
-			if(isalpha(str[i]) || isdigit(str[i]) || str[i] == '_'){
-				goto Q110;
-			} else {
-				return "&*";
-			}
-		}
+
 	Q111:
 		i++;
 		if(str[i] == 'r'){
 			goto Q112;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q112:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return var;
+			return "var";
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q113:
 		i++;
@@ -1073,7 +944,7 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return algid;
+			return "algid";
 		} else{
 			return "&*";
 		}
@@ -1081,7 +952,7 @@ char *leitor(char str[],int *p) {
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return relopatt;
+			return "<-";
 		} else{
 			
 		}
@@ -1093,16 +964,21 @@ char *leitor(char str[],int *p) {
 		}
 	Q118:
 		i++;
-		if(isdigit(str[i])){
-			goto Q118;
-		} else{
-			return "&*";
-		}
+		if(str[i] == '\0'){
+				*p = i;
+				return "id";
+			}else{
+			if(isalpha(str[i]) || isdigit(str[i]) || str[i] == '_'){
+				goto Q118;
+			} else {
+				return "&*";
+			}
+		}	
 	Q119:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return pontdoispontos;
+			return ":";
 		} else{
 			return "&*";
 		}
@@ -1111,72 +987,79 @@ char *leitor(char str[],int *p) {
 		if(str[i] == 'l'){
 			goto Q121;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q121:
 		i++;
 		if(str[i] == 'g'){
 			goto Q122;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q122:
 		i++;
 		if(str[i] == 'o'){
 			goto Q123;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q123:
 		i++;
 		if(str[i] == 'r'){
 			goto Q124;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q124:
 		i++;
 		if(str[i] == 'i'){
 			goto Q125;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q125:
 		i++;
 		if(str[i] == 't'){
 			goto Q126;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q126:
 		i++;
 		if(str[i] == 'm'){
 			goto Q127;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q127:
 		i++;
 		if(str[i] == 'o'){
 			goto Q128;
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q128:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return fimalgoritmo;
+			return "fimalgoritmo";
 		} else{
-			goto Q110;
+			goto Q118;
 		}
 	Q129:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return pontvir;
+			return ";";
 		} else{
 			return "&*";
+		}
+	Q137:
+		i++;
+		if(isdigit(str[i])){
+			goto Q118;
+		} else{
+			return "erro";
 		}
 }
 
@@ -1426,57 +1309,42 @@ node *topoTabelaSimbolo(node *PILHA){
 
 
 int main(){
-	char str[80], linha[80], final[80] = "", url[]="", ch, r[100];
+	char str[80], linha[80], final[80] = "", url[]="", nomeToken[100];
+	char *lexema;
 	int i = -1, tamanho = 0, count=0, quantidade = 0;
 	FILE *arq;
 	FILE *saida;
 	node *BUFFER=(node *)malloc(sizeof(node));
     inicia(BUFFER);
-	//Definindo o arquivo a ser compilado como program.txt	
-	arq = fopen("program.txt", "r");
-	//Arquivo de saida.txt exibe a lista de tokens lidos pelo automato do método leitor
-	//a saída é exibida no formato <token,posição>
-	saida = fopen("saida.txt", "w");	
-	//Condição que valida a leitura do arquivo program.txt caso não seja possível a leitura
-	//a mensagem de erro será exibido	
+    
+	arq = fopen("teste.txt", "r");
+	
+	saida = fopen("saida.txt", "w");
+	
 	if(arq == NULL)
 		printf("Erro, nao foi possivel abrir o arquivo\n");
 	else{
-		//O loop garante a leitura linha a linha do arquivo program.txt
-		while((fgets(linha, 500, arq)!= NULL)&&(r!=0)){	
-		    //conta a quantidade de caracteres na linha que foi lida
-			tamanho = strlen(linha);
-			count=0;
-			//identifica cada caracter das palavras lidas
-			while(count<tamanho){
-				ch=linha[count];
-				//condição de parada para identificar o final de um token
-			   	if(ch == ' ' || ch == '\n') {
-			    	//strcat(final, &ch);
-			    	strcpy(r, leitor(final, &i));
-			    	if((r != "&*")&&(r != "%$")){
-			    	    enqueue(BUFFER,r,final);
-				    	fprintf(saida, "<%s,%s>\n", r, final);
+		while((fgets(linha, 500, arq)!= NULL)&&(nomeToken!=0)){	
+			if(!startsWith(linha, "//")) { 
+	    		 lexema = strtok( linha, " ,\n\t" );
+	    		 printf("%s\n", lexema);
+			     while( lexema != NULL ){
+				    strcpy(nomeToken, leitor(lexema, &i));
+				    lexema = strtok( NULL, " ,\n\t" );
+				    if((nomeToken != "&*")&&(nomeToken != "%$")){
+			    	    enqueue(BUFFER,nomeToken,lexema);
+				    	fprintf(saida, "<%s,%s>\n", nomeToken, lexema);
 				    	quantidade++;
 				    	}else{
-				    		if(r=="&*"){
+				    		if(nomeToken=="&*"){
 				    		       printf("Erro: Entrada nao aceita");
-						           printf("\nSequencia incorreta: %s\n", final);
+						           printf("\nSequencia incorreta: %s\n", lexema);
 						    }      break;
-						}           
-					}else{
-						if(r == "")
-						    break;
-					    }
-			    	i = -1;
-			    	strcpy(final, "");
-			    	} else {
-			    		strcat(final, &ch);
-			    	}
-			    count++; 	
-			    }
-		   }  
-		//exibe(BUFFER);    
+						}
+				 }
+			}	
+			    
+		   }    
 		fclose(saida);
 		fclose(arq);
 		}
