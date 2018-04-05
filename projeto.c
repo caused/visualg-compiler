@@ -9,7 +9,7 @@ int startsWith(const char *a, const char *b)
    if(strncmp(a, b, strlen(b)) == 0) return 1;
    return 0;
 }
-
+int historico = 0;
 
 char *leitorLexico(char str[],int *p) {
   int i = *p;
@@ -120,7 +120,10 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 	    if(str[i] == 'o'){
 			goto Q6;
-	    } else {
+	    } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else {
 	        goto Q118;
         }
 	Q6:
@@ -146,7 +149,10 @@ char *leitorLexico(char str[],int *p) {
 	        goto Q9;
         }else if(str[i] == 's') {
 	        goto Q39;
-        }else{
+        }else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else{
         	goto Q118;
 		}
 	Q9:
@@ -168,7 +174,10 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 	    if (str[i] == 'n') {
           goto Q12;
-	    } else {    
+	    } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else {    
 		  goto Q118;
         } 
 	Q12:
@@ -222,7 +231,10 @@ char *leitorLexico(char str[],int *p) {
 			goto Q19;
 	    } else if(str[i] == 'e'){    
 		    goto Q40;
-        } else{
+        } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else{
         	goto Q118;
 		}
 	Q19:
@@ -267,7 +279,10 @@ char *leitorLexico(char str[],int *p) {
 			goto Q25;
 	    } else if(str[i] == 'i') {    
 		    goto Q57;
-        } else{
+        } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else{
         	goto Q118;
 		}
 	Q25:
@@ -307,6 +322,9 @@ char *leitorLexico(char str[],int *p) {
 		    	goto Q30;
 		}else if(str[i] = 'a'){
 			goto Q115;
+		}else if(str[i] == '\0') {
+			*p = i;
+			return "id";
 		}else{
 			goto Q118;
 		}
@@ -476,14 +494,20 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 	    if(str[i] == 'e'){
 			goto Q53;
-	    } else {    
+	    } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else {    
 		    goto Q118;
         } 
 	Q53:
 	    i++;
 	    if(str[i] == 'n'){
 			goto Q54;
-	    } else {    
+	    } else if(str[i] == '\0') {
+			*p = i;
+			return "se";
+		}else{
 		    goto Q118;
         } 
 	Q54:
@@ -547,7 +571,10 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 	    if(str[i] == 'a'){
 			goto Q62;
-	    } else {    
+	    } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else {    
 		    goto Q118;
         } 
 	Q62:
@@ -576,7 +603,10 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 	    if(str[i] == 'e'){
 			goto Q66;
-	    } else {    
+	    } else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else {    
 		    goto Q118;
         } 
 	Q66:
@@ -593,6 +623,9 @@ char *leitorLexico(char str[],int *p) {
 			goto Q68;
 	    } else if(str[i] == 'l'){
 	    	goto Q90;
+		}else if(str[i] == '\0') {
+			*p = i;
+			return "id";
 		}else {    
 		    goto Q118;
         } 
@@ -919,7 +952,10 @@ char *leitorLexico(char str[],int *p) {
 		i++;
 		if(str[i] == 'u'){
 			goto Q113;
-		} else{
+		} else if(str[i] == '\0') {
+			*p = i;
+			return "id";
+		}else{
 			goto Q118;
 		}
 	Q113:
@@ -1135,14 +1171,6 @@ void exibe(node *FILA){
     }
 }
 
-void debugPrintBuffer(node *FILA){
-	node *tmp;
-	tmp = FILA->prox;
-	#ifdef DEBUG
-    printf ("Lexema: <%s>\n", tmp->lexema);
-    #endif
-}
-//libera o buffer 
 void libera(node *FILA){
 	if(!vazia(FILA)){
 		node *proxNode,
@@ -1156,7 +1184,6 @@ void libera(node *FILA){
 	}
 }
 
-//escreve o elemento lido dentro do buffer
 void enqueue(node *FILA, char* elem,char* s){
     node *novo=aloca(elem,s);
    	novo->prox = NULL;
@@ -1171,17 +1198,30 @@ void enqueue(node *FILA, char* elem,char* s){
 	tam++;
 }
 
-//retira o elemento a partir do topo do buffer
-node *dequeue(node *FILA){ 
-	if(FILA->prox == NULL){
-		printf("Fila ja esta vazia\n");
-		return NULL;
-	}else{
-		node *tmp = FILA->prox;
-		FILA->prox = tmp->prox;
-		tam--;
-		return tmp;
-	}
+int buscaSimbolo(node *token, char *elemento){
+ 	int i = 1;
+    if(token->prox == NULL){
+       exit(0);
+    }else{
+        while(token->prox != NULL){
+        	if(strcmp(token->token, "id") == 0){
+        		if(strcmp(token->lexema, elemento) ==0){
+        			historico = i;
+        			if((historico - i) > 1){
+				       	return historico +1;
+					   }else{
+					   	return i;
+					   }
+				}else{
+					i++;
+				}
+			}
+        	
+            token = token->prox;
+       }
+       return ++historico;
+    
+    }
 }
 
 
@@ -1193,6 +1233,7 @@ int main(){
 	FILE *saida;
 	node *BUFFER=(node *)malloc(sizeof(node));
     inicia(BUFFER);
+    int posicao;
     
 	arq = fopen("teste.txt", "r");
 	
@@ -1204,22 +1245,25 @@ int main(){
 		while((fgets(linha, 500, arq)!= NULL)&&(nomeToken!=0)){	
 			if(!startsWith(linha, "//")) { 
 	    		 lexema = strtok( linha, " \n\t" );
+	    		 
 			    while( lexema != NULL ){
-				    strcpy(nomeToken, leitorLexico(lexema, &i));
+					strcpy(nomeToken, leitorLexico(lexema, &i));
 				    if(strcmp (nomeToken, "erro") != 0){
-			    	    enqueue(BUFFER,nomeToken,lexema);
-			    	    printf("%s\n", nomeToken);
+			    	    if(strcmp(nomeToken, "id") == 0){
+			    	    	enqueue(BUFFER,nomeToken,lexema);
+			    	    	posicao = buscaSimbolo(BUFFER, lexema);
+						}
 			    	    if(strcmp (nomeToken, lexema) == 0){
 			    	    	fprintf(saida, "<%s>\n", nomeToken);
 						}else{
-							fprintf(saida, "<%s,%s>\n", nomeToken, lexema);	
+							fprintf(saida, "<%s,%d>\n", nomeToken, posicao);	
 						}
 				    	quantidade++;
 				    	}else{
 				    		if(nomeToken=="erro"){
 				    		       printf("Erro: Entrada nao aceita");
 						           printf("\nSequencia incorreta: %s\n", lexema);
-						    }      break;
+						    }      
 						}
 					lexema = strtok( NULL, " \n\t" );	
 					i = -1;
@@ -1230,6 +1274,7 @@ int main(){
 		fclose(saida);
 		fclose(arq);
 		}
+		
 	libera(BUFFER);
     return 0;
 }

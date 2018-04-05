@@ -1,6 +1,6 @@
 algoritmo "salario"
 // Seção de Declarações
-var sal : inteiro
+var sal , v : inteiro
 i , contador : inteiro
 
 inicio
@@ -8,11 +8,13 @@ inicio
 i <- 0 ;
 contador <- 0 ;
 para i de 1 ate 5 passo 1 faca
-   escreva ( " Digite o salario do funcionário " , i , " : ") ;
+   escreva ( b ) ;
+   leia ( sal )
+   leia ( v )
    leia ( sal )
    se sal > 500 entao
       contador <- contador + 1
    fimse
 fimpara
-escreval ( contador , " Funcionários recebem salários superiores a R$ 300 " )
+escreval (" Funcionarios ganham por mes isso aqui : ", contador )
 fimalgoritmo
