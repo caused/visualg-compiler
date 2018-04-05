@@ -11,7 +11,7 @@ int startsWith(const char *a, const char *b)
 }
 
 
-char *leitor(char str[],int *p) {
+char *leitorLexico(char str[],int *p) {
   int i = *p;
 
 	goto Q0;
@@ -56,12 +56,18 @@ char *leitor(char str[],int *p) {
 			goto Q121;
 		} else if (str[i] == '+'){
 			goto Q1;
-		} else  if (str[i] == '"'){
+		} else  if (str[i] == '\"'){
 			goto Q123;    
 		} else if(str[i] == ':'){
 			goto Q124;
 		} else if(str[i] == ','){
 			goto Q119;
+		} else if(str[i] == '('){
+			goto Q138;
+		} else if(str[i] == ')'){
+			goto Q139;
+		} else if(str[i] == ';'){
+			goto Q140;
 		} else if(isalpha(str[i])){
 			goto Q118;
 		} else {
@@ -366,7 +372,7 @@ char *leitor(char str[],int *p) {
 		i++;
     	if(str[i] == '\0'){
     		*p = i;
-    		return "verdadeiro"s;
+    		return "verdadeiro";
 		} else {
 			goto Q118;
 		}
@@ -540,7 +546,7 @@ char *leitor(char str[],int *p) {
 	Q61:
 	    i++;
 	    if(str[i] == 'a'){
-			goto Q62
+			goto Q62;
 	    } else {    
 		    goto Q118;
         } 
@@ -948,14 +954,14 @@ char *leitor(char str[],int *p) {
 		}
 	Q118:
 		i++;
-		if(str[i] == '\0'){
+		if(str[i] == '\0' || str[i] == '\"'){
 				*p = i;
 				return "id";
 			}else{
 			if(isalpha(str[i]) || isdigit(str[i]) || str[i] == '_'){
 				goto Q118;
 			} else {
-				return "&*";
+				return "erro";
 			}
 		}	
 	Q119:
@@ -987,7 +993,7 @@ char *leitor(char str[],int *p) {
 		if(isdigit(str[i]) || isalpha(str[i])){
 			goto Q123;
 		} else{
-			if(str[i] == '"'){
+			if(str[i] == '\"'){
 				goto Q118;
 			} else {
 				return "erro";
@@ -995,55 +1001,66 @@ char *leitor(char str[],int *p) {
 		}
 	Q124:
 		i++;
-		if(str[i] == 'i'){
-			goto Q125;
+		if(str[i] == '\0'){
+			*p = i;
+			return ":";
 		} else{
-			goto Q118;
+			return "erro";
 		}
 	Q125:
 		i++;
-		if(str[i] == 't'){
-			goto Q126;
+		if(str[i] == '\0'){
+			*p = i;
+			return "*";
 		} else{
-			goto Q118;
+			return "erro";
 		}
 	Q126:
 		i++;
-		if(str[i] == 'm'){
-			goto Q127;
+		if(str[i] == '\0'){
+			*p = i;
+			return "\\";
 		} else{
-			goto Q118;
+			return "erro";
 		}
-	Q127:
-		i++;
-		if(str[i] == 'o'){
-			goto Q128;
-		} else{
-			goto Q118;
-		}
-	Q128:
+
+	Q137:
 		i++;
 		if(str[i] == '\0'){
 			*p = i;
-			return "fimalgoritmo";
+			return str;
+		}else if(isdigit(str[i])){
+			goto Q137;
 		} else{
-			goto Q118;
+			return "erro";
 		}
-	Q129:
-		i++;
+		
+	Q138:
+	    i++;
+		if(str[i] == '\0'){
+			*p = i;
+			return "(";
+		} else{
+			return "erro";
+		}
+	Q139:
+	    i++;
+		if(str[i] == '\0'){
+			*p = i;
+			return ")";
+		} else{
+			return "erro";
+		}
+		
+	Q140:
+	    i++;
 		if(str[i] == '\0'){
 			*p = i;
 			return ";";
 		} else{
-			return "&*";
-		}
-	Q137:
-		i++;
-		if(isdigit(str[i])){
-			goto Q118;
-		} else{
 			return "erro";
-		}
+		}	
+		
 }
 
 /*Buffer que irá armazenar os tokens lidos pelo analizador léxico*/
@@ -1158,141 +1175,9 @@ node *dequeue(node *FILA){
 	}
 }
 
-node *head(node *FILA){
-    if(FILA->prox == NULL){
-       exit(0);
-    }else{
-        node *tmp = FILA->prox;
-		return tmp;
-    }
-}
-
-char* lookahead(node *FILA){
-    if(FILA->prox == NULL){
-       exit(0);
-    }else{
-        node *tmp = FILA->prox;
-		return tmp->token;
-    }
-}
-
-
-void match(node *FILA, char* token){
-	if(lookahead(FILA) == token){	
-		dequeue(FILA);
-		}else{
-			printf("ERRO SINTATICO\n");
-			exit(1);
-		}	
-}
-
-/*TABELA DE SIMBOLOS*/
-
-void iniciaTabelaSimbolo(node *PILHA);
-void exibeTabelaSimbolo(node *PILHA);
-void liberaTabelaSimbolo(node *PILHA);
-node *retirarTabelaSimbolo(node *PILHA);
-
-//inicia a Tabela de Simbolo
-void iniciaTabelaSimbolo(node *PILHA)
-{
- PILHA->prox = NULL;
- tam=0;
-}
-//verifica se a Tabela de Simbolo está vazia
-int vaziaTabelaSimbolo(node *PILHA){
-    if(PILHA->prox == NULL)
-       return 1;
-    else
-       return 0;
-}
-//aloca o identificador lido na Tabela de Simbolo
-node *alocaTabelaSimbolo(char* elem, int escopo){
-    node *novo=(node *) malloc(sizeof(node));
-	if(!novo){
-       printf("Sem memoria disponivel!\n");
-  	   exit(1);
-	}else{
-	   novo->escopo = escopo;
-	   strcpy (novo->lexema, elem);
-	   return novo;
-	}
-}
-//exibe os elementos dentro da Tabela de Simbolo
-void exibeTabelaSimbolo(node *PILHA){
-    int count=0;
-	if(vazia(PILHA)){
-	   printf("PILHA vazia!\n\n");
-    }
-	node *tmp;
-	tmp = PILHA->prox;
-	printf("TABELA DE SIMBOLOS:\n");
-	while( tmp != NULL){
-	  printf("<%s,%d> escopo = %d\n", tmp->lexema,count, tmp->escopo);
-	  tmp = tmp->prox;
-	  count++;
-    }
-
-}
-//libera a Tabela de Simbolo 
-void liberaTabelaSimbolo(node *PILHA){
-    if(!vazia(PILHA)){
-       node *proxNode,
-       *atual;
-        atual = PILHA->prox;
-        while(atual != NULL){
-            proxNode = atual->prox;
-            free(atual);
-            atual = proxNode;
-        }
-    }
-}
-//escreve o elemento lido dentro da Tabela de Simbolo
-void adicionaTabelaSimbolo(node *PILHA, char* elem, int escopo){
-    node *novo=alocaTabelaSimbolo(elem, escopo);
-    novo->prox = NULL;
-    if(vazia(PILHA))
-      PILHA->prox=novo;
-    else{
-      node *tmp = PILHA->prox;
-      while(tmp->prox != NULL)
-        tmp = tmp->prox;
-    tmp->prox = novo; 
-	}
-    tam++;
-}
-//retira o elemento a partir do topo da Tabela de Simbolo
-node *retirarTabelaSimbolo(node *PILHA){
-    if(PILHA->prox == NULL){
-       exit(0);
-    }else{
-        node *ultimo = PILHA->prox,
-        *penultimo = PILHA;
-        while(ultimo->prox != NULL){
-            penultimo = ultimo;
-            ultimo = ultimo->prox;
-       }
-    penultimo->prox = NULL;
-    tam--;
-    return ultimo;
-    }
-}
-//verifica o topo da Tabela de Simbolo
-node *topoTabelaSimbolo(node *PILHA){
-    if(PILHA->prox == NULL){
-       exit(0);
-    }else{
-        node *ultimo = PILHA->prox;
-        while(ultimo->prox != NULL){
-            ultimo = ultimo->prox;
-       }
-    return ultimo;
-    }
-}
-
 
 int main(){
-	char str[80], linha[80], final[80] = "", url[]="", nomeToken[100];
+	char str[80], linha[80], nomeToken[100];
 	char *lexema;
 	int i = -1, tamanho = 0, count=0, quantidade = 0;
 	FILE *arq;
@@ -1309,21 +1194,25 @@ int main(){
 	else{
 		while((fgets(linha, 500, arq)!= NULL)&&(nomeToken!=0)){	
 			if(!startsWith(linha, "//")) { 
-	    		 lexema = strtok( linha, " ,\n\t" );
-	    		 printf("%s\n", lexema);
-			     while( lexema != NULL ){
-				    strcpy(nomeToken, leitor(lexema, &i));
-				    lexema = strtok( NULL, " ,\n\t" );
-				    if((nomeToken != "&*")&&(nomeToken != "%$")){
+	    		 lexema = strtok( linha, " \n\t" );
+			    while( lexema != NULL ){
+				    strcpy(nomeToken, leitorLexico(lexema, &i));
+				    if(nomeToken != "erro"){
 			    	    enqueue(BUFFER,nomeToken,lexema);
-				    	fprintf(saida, "<%s,%s>\n", nomeToken, lexema);
+			    	    if(strcmp (nomeToken, lexema) == 0){
+			    	    	fprintf(saida, "<%s>\n", nomeToken);
+						}else{
+							fprintf(saida, "<%s,%s>\n", nomeToken, lexema);	
+						}
 				    	quantidade++;
 				    	}else{
-				    		if(nomeToken=="&*"){
+				    		if(nomeToken=="erro"){
 				    		       printf("Erro: Entrada nao aceita");
 						           printf("\nSequencia incorreta: %s\n", lexema);
 						    }      break;
 						}
+					lexema = strtok( NULL, " \n\t" );	
+					i = -1;
 				 }
 			}	
 			    
