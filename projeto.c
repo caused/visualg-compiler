@@ -1,3 +1,10 @@
+/*
+	Gustavo Alves dos Santos Silva - 31504116
+	Cassiano Moura Leão - 31574564
+	Veridiana Lopes - 31510671
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -581,7 +588,9 @@ char *leitorLexico(char str[],int *p) {
 	    i++;
 	    if(str[i] == 'r'){
 			goto Q63;
-	    } else {    
+	    } else if(str[i] == 's'){
+			goto Q127;
+		}else {    
 		    goto Q118;
         } 
 	Q63:
@@ -1068,7 +1077,28 @@ char *leitorLexico(char str[],int *p) {
 		} else{
 			return "erro";
 		}
-
+	Q127:
+		i++;
+	    if (str[i] == 's') {
+          goto Q128;
+	    } else {    
+		    goto Q118;
+        } 	
+	Q128:
+		i++;
+	    if (str[i] == 'o') {
+          goto Q129;
+	    } else {    
+		    goto Q118;
+        }
+	Q129:
+		i++;
+	    if (str[i] == '\0') {
+          *p = i;
+		  return "passo";
+		} else{
+			goto Q118;
+		}
 	Q137:
 		i++;
 		if(str[i] == '\0'){
@@ -1108,7 +1138,7 @@ char *leitorLexico(char str[],int *p) {
 		
 }
 
-/*Buffer que irá armazenar os tokens lidos pelo analizador léxico*/
+/*Buffer que irá armazenar os id's*/
 struct Node{
 	int escopo;
     char token[100];
@@ -1125,11 +1155,9 @@ void inicia(node *FILA);
 int vazia(node *FILA);
 node *aloca(char* elem,char* s);
 void enqueue(node *FILA, char* elem,char* s);
-node *dequeue(node *FILA);
-void exibe(node *FILA);
+void exibe(node *FILA); // Metodo usado para testes
 void libera(node *FILA);
 
-//inicia o buffer
 void inicia(node *FILA){
 	FILA->prox = NULL;
 	tam=0;
@@ -1155,7 +1183,6 @@ node *aloca(char* elem,char* s){
 	}
 }
 
-//exibe os elementos dentro do buffer
 void exibe(node *FILA){
     int count=0;
 	if(vazia(FILA)){
@@ -1252,11 +1279,12 @@ int main(){
 			    	    if(strcmp(nomeToken, "id") == 0){
 			    	    	enqueue(BUFFER,nomeToken,lexema);
 			    	    	posicao = buscaSimbolo(BUFFER, lexema);
+			    	    	sprintf(lexema, "%d", posicao);
 						}
 			    	    if(strcmp (nomeToken, lexema) == 0){
 			    	    	fprintf(saida, "<%s>\n", nomeToken);
 						}else{
-							fprintf(saida, "<%s,%d>\n", nomeToken, posicao);	
+							fprintf(saida, "<%s,%s>\n", nomeToken, lexema);	
 						}
 				    	quantidade++;
 				    	}else{
